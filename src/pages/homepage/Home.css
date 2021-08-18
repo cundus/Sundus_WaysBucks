@@ -1,0 +1,10 @@
+.home-container {
+  margin: auto;
+  margin-top: 1em;
+  max-width: 80vw;
+  min-height: 150vh;
+}
+
+.cardlist {
+  margin: auto;
+}

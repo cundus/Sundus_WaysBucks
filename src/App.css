@@ -1,0 +1,22 @@
+.full-width {
+  width: 100%;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+
+.color-dominant {
+  color: #bd0707;
+}
+
+.form-dominant {
+  border: 2px solid #bd0707;
+  background: #e0c8c840 !important;
+}
+
+.button-dominant {
+  background-color: #bd0707 !important;
+  color: white;
+  border-color: #bd0707 !important;
+}
