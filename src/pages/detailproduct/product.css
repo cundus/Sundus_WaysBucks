@@ -1,0 +1,60 @@
+.detail-product-container {
+  padding: 2em 8em;
+  margin: auto;
+}
+.topping-container {
+  padding: 1em;
+  text-align: center;
+}
+
+.photo-detail {
+  width: 25rem;
+  height: 30rem;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-right: 2em;
+}
+
+.card-topping-photo {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.right {
+  width: 30rem;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.topping-label {
+  position: relative;
+  cursor: pointer;
+}
+
+.topping-label:before {
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  left: 4em;
+  transition-duration: 0.4s;
+  transform: scale(0);
+}
+
+.topping-label img {
+  transition-duration: 0.3s;
+}
+
+:checked + .topping-label:before {
+  content: url("../../assets/checklist.svg");
+  z-index: 1;
+  transform: scale(1);
+}
+
+:checked + .topping-label img {
+  /* box-shadow: 0 0 5px #333; */
+  transform: scale(0.9);
+}

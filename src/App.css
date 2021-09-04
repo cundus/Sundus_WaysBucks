@@ -11,12 +11,30 @@
 }
 
 .form-dominant {
-  border: 2px solid #bd0707;
+  border: 2px solid #bd0707 !important;
   background: #e0c8c840 !important;
+  border-radius: 5px;
+}
+
+.form-dominant:focus-visible {
+  outline: none;
 }
 
 .button-dominant {
   background-color: #bd0707 !important;
   color: white;
   border-color: #bd0707 !important;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  margin-left: -6em !important;
 }
