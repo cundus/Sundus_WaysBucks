@@ -1,4 +1,8 @@
-.left-container {
+.cartContainer {
+  padding: 2em 3em;
+}
+
+.cart-left-container {
   /* background-color: aquamarine; */
   padding: 1em;
   width: 40rem;
@@ -10,7 +14,8 @@
 }
 
 .info-card > p {
-  margin-top: 0.4em;
+  margin-top: 0;
+  margin: 0;
 }
 
 .subtotal-info {
@@ -31,7 +36,7 @@
   background-color: #e0c8c840;
   margin-left: 1em;
   margin-top: 0.4em;
-  border: 1px solid #bd0707;
+  border: 2px solid #bd0707;
   border-radius: 10px;
   padding: 1em;
   width: 15rem;
@@ -39,8 +44,42 @@
   text-align: center;
 }
 
-.right-container {
+.cart-right-container {
   /* background-color: burlywood; */
   width: 20rem;
   margin-top: 6rem;
+}
+
+.productCardContainer {
+  max-height: 15rem;
+  overflow: auto;
+}
+
+.attachment-preview {
+  z-index: -1;
+  border-radius: 10px;
+  position: absolute;
+  margin-left: -7em;
+  margin-top: -2.2em;
+  width: 14rem;
+  height: 7rem;
+  object-fit: cover;
+}
+
+.change-attachment {
+  background: #bd0707;
+  color: white;
+  padding: 0.2em 1em;
+  border-radius: 10px;
+  margin-top: 1em;
+}
+
+.quantity-info > span {
+  margin: 0 0.2em;
+  font-size: larger;
+}
+
+.quantity-number {
+  padding: 0 10px;
+  background: #e0c8c840;
 }

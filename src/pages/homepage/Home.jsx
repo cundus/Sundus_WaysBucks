@@ -12,7 +12,7 @@ import Loader from "../../components/loading/Loader";
 const Home = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -41,7 +41,7 @@ const Home = () => {
           <strong>Let's Order</strong>
         </h2>
         <Row>
-          {data.map((item, index) => (
+          {data.map((item) => (
             <Col md={3} key={item.id}>
               <CardList item={item} />
             </Col>

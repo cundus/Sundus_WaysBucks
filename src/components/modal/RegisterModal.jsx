@@ -1,42 +1,48 @@
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
-import { loginData } from "../../data/fakedata";
+import { API } from "../../config/api";
 
 const RegisterModal = ({ show, hide, showLogin }) => {
   const [data, setData] = useState({
-    id: Math.floor(Math.random() * 100 + 1),
     name: "",
     email: "",
     password: "",
-    isAdmin: false,
+    role_id: 2,
   });
   const [success, setSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageOk, setMessageOk] = useState("");
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const checkEmail = loginData.filter((item) => item.email === data.email);
-    if (checkEmail.length > 0 && checkEmail[0].email === data.email) {
-      console.log("Data sudah ada");
-      setIsError(true);
-      setSuccess(false);
-    } else {
-      loginData.push(data);
-      console.log(loginData);
+    try {
       setIsError(false);
-      setSuccess(true);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const body = JSON.stringify({ ...data });
+      const res = await API.post("/register", body, config);
+
+      console.log(res);
       setData({
-        id: Math.floor(Math.random() * 100 + 1),
         name: "",
         email: "",
         password: "",
-        isAdmin: false,
+        role: 2,
       });
+      setMessageOk("Success Create Account, You Can Login Now");
+    } catch (error) {
+      const { response } = error;
+      console.log(response);
+      setIsError(true);
+      setMessage(response.data.message);
     }
   };
 
@@ -45,10 +51,8 @@ const RegisterModal = ({ show, hide, showLogin }) => {
       <Modal show={show} onHide={hide} centered>
         <Form className="p-5" onSubmit={handleSubmit}>
           <h1 className="color-dominant mb-3">Register</h1>
-          {isError && <Alert variant="danger">Email already registered!</Alert>}
-          {success && (
-            <Alert variant="success">Success Register, You Can Login now</Alert>
-          )}
+          {isError && <Alert variant="danger">{message}</Alert>}
+          {messageOk && <Alert variant="success">{messageOk}</Alert>}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="email"

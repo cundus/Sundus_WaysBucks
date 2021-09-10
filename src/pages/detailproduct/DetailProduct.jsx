@@ -1,5 +1,5 @@
 // import { data, topping } from "../../data/fakedata";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Loader from "../../components/loading/Loader";
@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { WBContext } from "../../context/WBContext";
 import LoginModal from "../../components/modal/LoginModal";
 import { API } from "../../config/api";
+import PopUp from "../../components/modal/PopUp";
 
 const DetailProduct = () => {
   const { state, dispatch } = useContext(WBContext);
@@ -17,10 +18,15 @@ const DetailProduct = () => {
   const [checkedToppings, setCheckedToppings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-
   const { id } = useParams();
+  const history = useHistory();
 
-  // console.log("ini checked Toppings", dataTopping);
+  // ------ state for Pop Up Notification
+  const [showPop, setShowPop] = useState(false);
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(true);
+
+  // console.log("ini checked Toppings", id);
 
   function formatPrice(price) {
     return new Intl.NumberFormat("id-ID", {
@@ -72,16 +78,30 @@ const DetailProduct = () => {
     .map((selectedTopping) => selectedTopping.price)
     .reduce((prev, curr) => prev + curr, dataProduct.price);
 
-  console.log(selectedToppingsId);
+  // console.log(selectedToppingsId);
 
   const AddToCart = (e) => {
     e.preventDefault();
 
+    console.log(selectedToppingsId);
+
     if (state.isLogin === true) {
       dispatch({
-        type: "ADD_CART",
-        payload: { id, subTotal, toppings: selectedToppingsId },
+        type: "ADD_TO_CART",
+        payload: {
+          id: dataProduct.id,
+          toppings: selectedToppings,
+          initialPrice: subTotal,
+          quantity: 1,
+          subTotal: subTotal,
+        },
       });
+      dispatch({
+        type: "SAVE_CART",
+      });
+      setShowPop(true);
+      setMessage("Success added item to cart!");
+      setSuccess(true);
     } else {
       setShowLogin(true);
     }
@@ -113,6 +133,7 @@ const DetailProduct = () => {
               ))}
             </Row>
           </div>
+
           <div className="d-flex justify-content-between mt-4">
             <h4>Total</h4>
             <h4>{formatPrice(subTotal)}</h4>
@@ -123,9 +144,19 @@ const DetailProduct = () => {
           >
             Add Cart
           </button>
-          <LoginModal show={showLogin} hide={() => setShowLogin(false)} />
+          <LoginModal
+            show={showLogin}
+            hide={() => setShowLogin(false)}
+            dispatch={dispatch}
+          />
         </div>
       </div>
+      <PopUp
+        show={showPop}
+        hide={() => setShowPop(false)}
+        message={message}
+        success={success}
+      />
     </div>
   );
 };

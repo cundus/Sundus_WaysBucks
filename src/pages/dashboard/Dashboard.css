@@ -1,0 +1,10 @@
+.containerTable {
+  display: flex;
+  flex-direction: column;
+  padding: 2em 10em;
+}
+
+th,
+td {
+  font-size: 13px;
+}

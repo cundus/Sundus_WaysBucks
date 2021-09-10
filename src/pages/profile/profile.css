@@ -5,8 +5,8 @@
 
 .profile-pic {
   margin-right: 1em;
-  width: 10rem;
-  height: 13rem;
+  width: 13rem;
+  height: 16rem;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -25,31 +25,103 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 10rem;
 }
 
 .success {
   min-width: 7.5rem;
   background: rgba(28, 194, 28, 0.253);
-  padding: 5px 20px;
-  color: #78a85a;
+  padding: 3px;
+  border-radius: 5px;
+  color: #5d8842;
 }
 
 .wait {
   min-width: 7.5rem;
   background: #ff990038;
-  padding: 5px 20px;
+  padding: 3px;
+  border-radius: 5px;
   color: #ff9900;
 }
 
 .cancel {
   min-width: 7.5rem;
   background: #e8393942;
-  padding: 5px 20px;
+  padding: 3px;
+  border-radius: 5px;
   color: #e83939;
+}
+
+.otw {
+  min-width: 7.5rem;
+  background: #0231ff38;
+  padding: 3px;
+  border-radius: 5px;
+  color: #0c16a7;
 }
 
 .status-text {
   text-align: center;
-  font-size: 10px;
+  font-size: 14px;
   margin: 0;
+}
+
+/* TransactionCardContainer */
+.TransactionCardContainer {
+  display: flex;
+  justify-content: space-between;
+  height: 16.4rem;
+  width: 35rem;
+  margin: 1em 0;
+  background: #f6dada;
+  padding: 11px 20px;
+  border-radius: 10px;
+}
+
+.leftCard {
+  height: 15.5rem;
+  overflow-y: auto;
+}
+
+.subTotal {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0.4em;
+  margin-bottom: 0;
+}
+
+.btn-success-user {
+  text-align: center;
+  margin-top: 0.4em;
+  margin-bottom: 0;
+  padding: 5px 14px;
+  background: #970606;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px black;
+}
+/* ProductCardContainer */
+.productCard {
+  display: flex;
+  font-size: 12px;
+  margin: 1em;
+}
+
+.cardImage {
+  width: 5.3rem;
+  height: 6.5rem;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 1em;
+}
+
+.cardBody > p {
+  margin: 0;
+}
+
+.cardBody-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
 }

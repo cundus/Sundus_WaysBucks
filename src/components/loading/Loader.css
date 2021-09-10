@@ -1,3 +1,8 @@
+.LoaderContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10rem;
+}
 .lds-roller {
   display: inline-block;
   position: relative;

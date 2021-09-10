@@ -58,3 +58,12 @@ input[type="checkbox"] {
   /* box-shadow: 0 0 5px #333; */
   transform: scale(0.9);
 }
+
+.quantityCounter {
+  display: flex;
+}
+
+.quantityCounter > p {
+  margin-right: 1em;
+  font-size: larger;
+}

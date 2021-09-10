@@ -12,9 +12,11 @@ import AddProductIcon from "../../assets/AddProduct.svg";
 import AddTopppingIcon from "../../assets/addToping.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import AvatarPlaceholder from "../../assets/profile.png";
+import Polygon from "../../assets/Polygon.svg";
 
 import RegisterModal from "../modal/RegisterModal";
 import { WBContext } from "../../context/WBContext";
+import { setAuthToken } from "../../config/api";
 
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -22,6 +24,8 @@ const Header = () => {
 
   const { state, dispatch } = useContext(WBContext);
   const history = useHistory();
+
+  console.log("ini State di Context ", state.cart);
 
   const showLoginHandle = () => {
     setShowLogin(true);
@@ -44,9 +48,7 @@ const Header = () => {
               width="70px"
               onClick={() =>
                 history.push(
-                  state.isLogin && state.user.isAdmin === true
-                    ? "/dashboard"
-                    : "/"
+                  state.isLogin && state.user.role_id === 1 ? "/dashboard" : "/"
                 )
               }
             />
@@ -102,19 +104,32 @@ const AfterLogin = ({ state, dispatch }) => {
     dispatch({
       type: "LOGOUT",
     });
+    dispatch({
+      type: "RESET_CART",
+    });
+    setAuthToken();
+
+    history.push("/");
   };
 
   return (
     <>
       <Nav>
-        {state.user.isAdmin === false ? (
-          <img
-            src={CartIcon}
-            alt="cart"
-            onClick={() => history.push("/cart")}
-            className="cursor-pointer me-4"
-            width="30px"
-          />
+        {state.user.role_id === 2 ? (
+          <>
+            {state.cart?.length > 0 ? (
+              <div className="cartCount">
+                <p>{state.cart.length}</p>
+              </div>
+            ) : null}
+            <img
+              src={CartIcon}
+              alt="cart"
+              onClick={() => history.push("/cart")}
+              className="cursor-pointer cart me-4"
+              width="30px"
+            />
+          </>
         ) : null}
         <Dropdown as={Nav.Item} id="nav-dropdown">
           <Dropdown.Toggle id="dropdown-autoclose-true" as={Nav.Link}>
@@ -122,14 +137,14 @@ const AfterLogin = ({ state, dispatch }) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="dropdown-menu">
-            {state.user.isAdmin === false ? (
+            {state.user.role_id === 2 ? (
               <NavDropdown.Item onClick={() => history.push("/profile")}>
                 <div className="d-flex">
                   <img
                     src={ProfileIcon}
                     alt="..."
                     style={{
-                      width: "20px",
+                      width: "23px",
                       height: "auto",
                       marginRight: "1em",
                     }}
@@ -148,12 +163,13 @@ const AfterLogin = ({ state, dispatch }) => {
                         width: "20px",
                         height: "auto",
                         marginRight: "1em",
+                        marginBottom: ".5em",
                       }}
                     />
                     Add Product
                   </div>
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => history.push("/add-product")}>
+                <NavDropdown.Item onClick={() => history.push("/add-topping")}>
                   <div className="d-flex">
                     <img
                       src={AddTopppingIcon}

@@ -37,4 +37,61 @@
 
 .dropdown-menu {
   margin-left: -6em !important;
+  margin-top: 1em !important;
+  border: none;
+  filter: drop-shadow(0 0 6px grey);
+}
+
+.dropdown-menu::before {
+  z-index: -1;
+  content: url("./assets/Polygon.svg");
+  position: absolute;
+  top: -1em;
+  left: 6.5em;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+  color: #bd0707;
+}
+
+.cartCount {
+  position: absolute;
+  margin-left: 1.3em;
+  margin-top: 1.2em;
+  width: 15px;
+  height: 15px;
+  background: #f13f3f;
+  border-radius: 50%;
+}
+.cartCount > p {
+  color: white;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f13f3f;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #bd0707;
 }

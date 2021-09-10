@@ -13,7 +13,7 @@ const CardList = ({ item }) => {
   return (
     <div>
       <Card
-        className="cursor-pointer"
+        className="cursor-pointer mb-5"
         style={{
           width: "16rem",
           borderRadius: "10px",

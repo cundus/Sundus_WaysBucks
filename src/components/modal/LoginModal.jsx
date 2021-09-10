@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Form, Button, Modal, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { loginData } from "../../data/fakedata";
+import { API, setAuthToken } from "../../config/api";
+
+// import { loginData } from "../../data/fakedata";
 
 const LoginModal = ({ show, hide, showRegister, dispatch }) => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -21,31 +23,29 @@ const LoginModal = ({ show, hide, showRegister, dispatch }) => {
 
   // console.log(data);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setIsError(false);
-
-    const response = loginData.filter((item) => item.email === data.email);
-    // setDataUser(response[0]);
-    if (
-      response.length > 0 &&
-      response[0].password === data.password &&
-      response[0].email === data.email
-    ) {
-      // console.log("ini adalah response", response[0]);
+    try {
+      setIsError(false);
+      const config = {
+        "Content-Type": "application/json",
+      };
+      const res = await API.post("/login", data, config);
+      // console.log("data Login", res.data.data);
       dispatch({
         type: "LOGIN",
-        payload: response[0],
+        payload: res.data.data,
       });
-      localStorage.setItem("userlogin", response[0].email);
+      setAuthToken(res.data.data.token);
+      localStorage.setItem("token", res.data.data.token);
       hide();
-      history.push(response[0].isAdmin ? "/dashboard" : "/");
-    } else {
-      console.log("data Kososng");
+      history.push(res.data.data.role_id === 2 ? "/" : "/dashboard");
+    } catch (error) {
+      const { response } = error;
+      console.log(response);
       setIsError(true);
+      setMessage(response.data.message);
     }
-    setLoading(false);
   };
 
   return (
@@ -53,9 +53,7 @@ const LoginModal = ({ show, hide, showRegister, dispatch }) => {
       <Modal show={show} onHide={hide} centered>
         <Form className="p-5" onSubmit={handleSubmit}>
           <h1 className="color-dominant mb-3">Login</h1>
-          {isError && (
-            <Alert variant="danger">Email or Password Don't Match</Alert>
-          )}
+          {isError && <Alert variant="danger">{message}</Alert>}
 
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
