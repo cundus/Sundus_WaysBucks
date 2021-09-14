@@ -32,11 +32,13 @@ const LoginModal = ({ show, hide, showRegister, dispatch }) => {
       };
       const res = await API.post("/login", data, config);
       // console.log("data Login", res.data.data);
+      setAuthToken(res.data.data.token);
+      const getProfile = await API.get("/profile");
+
       dispatch({
         type: "LOGIN",
-        payload: res.data.data,
+        payload: { ...getProfile.data.data },
       });
-      setAuthToken(res.data.data.token);
       localStorage.setItem("token", res.data.data.token);
       hide();
       history.push(res.data.data.role_id === 2 ? "/" : "/dashboard");

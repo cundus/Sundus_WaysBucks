@@ -44,7 +44,7 @@ const AddTopping = () => {
     <div>
       <div className="add-form-container">
         <div className="left-container">
-          <h2 className="color-dominant fw-bold mb-5">Product</h2>
+          <h2 className="color-dominant fw-bold mb-5">Topping</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-4" controlId="ControlInput1">
               <Form.Control
@@ -95,7 +95,7 @@ const AddTopping = () => {
                 className="button-dominant medium-width mt-3"
                 type="submit"
               >
-                Add Product
+                Add Topping
               </Button>
             </center>
           </Form>

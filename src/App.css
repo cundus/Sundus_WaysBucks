@@ -95,3 +95,51 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #bd0707;
 }
+
+.cardProduct:hover {
+  transform: scale(1.02);
+  transition: 0.1s;
+}
+
+/* DETAIL TRANSACTION MODAL */
+
+.detail-modal-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 1em;
+  height: max-content;
+}
+
+.detail-modal-container > div {
+  width: fit-content;
+  /* background: #7a2828; */
+  margin: 0 10px;
+}
+
+.detail-modal-container > div > h5 {
+  color: #bd0707;
+}
+
+.attachment-detail {
+  text-align: center;
+  width: 14rem;
+  height: 17rem;
+  object-fit: cover;
+}
+
+.userOrder > p {
+  margin-bottom: 0;
+}
+
+.userOrder {
+  margin-bottom: 2em;
+}
+
+.productOrdered > h6 {
+  /* background: #f13f3f; */
+  margin-bottom: 0;
+}
+
+.shippingAddress > div > p {
+  margin-bottom: 5px;
+}

@@ -21,12 +21,19 @@ const CartPage = () => {
   const { state, dispatch } = useContext(WBContext);
   const [attachment, setAttachmet] = useState(null);
   const [total, setTotal] = useState(0);
+
+  const subTotalCart = state.cart
+    .map((product) => product.subTotal)
+    .reduce((a, b) => a + b, 0);
+
+  function persen(input) {
+    const persen5 = (input / 100) * 10;
+    return persen5;
+  }
   useEffect(() => {
-    setTotal(
-      state.cart.map((product) => product.subTotal).reduce((a, b) => a + b, 0)
-    );
+    setTotal(subTotalCart + persen(subTotalCart));
   }, [state.cart]);
-  // console.log(state);
+  // console.log(persen(subTotalCart));
 
   return state.cart.length > 0 ? (
     <div>
@@ -47,7 +54,11 @@ const CartPage = () => {
               <hr className="solid" />
               <div className="d-flex justify-content-between">
                 <p>Subtotal</p>
-                <p>{formatPrice(total)}</p>
+                <p>{formatPrice(subTotalCart)}</p>
+              </div>
+              <div className="d-flex justify-content-between">
+                <p>Delivery Service</p>
+                <p>{formatPrice(persen(subTotalCart))}</p>
               </div>
               <div className="d-flex justify-content-between">
                 <p>Qty</p>
@@ -103,6 +114,8 @@ const CartPage = () => {
             attachment={attachment}
             cart={state.cart}
             dispatch={dispatch}
+            subTotal={subTotalCart}
+            service={persen(subTotalCart)}
           />
         </div>
       </div>
@@ -136,13 +149,6 @@ const CartCard = ({ item, dispatch }) => {
       ? item.toppings.map((topping) => topping.title).join(", ")
       : "-";
 
-  const handleRemoveFromCart = () => {
-    dispatch({
-      type: "REMOVE_FROM_CART",
-      payload: item,
-    });
-  };
-
   const saveCart = () => {
     dispatch({
       type: "SAVE_CART",
@@ -150,6 +156,13 @@ const CartCard = ({ item, dispatch }) => {
     dispatch({
       type: "GET_TOTAL_CART",
     });
+  };
+  const handleRemoveFromCart = () => {
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: item,
+    });
+    saveCart();
   };
 
   const onIncrease = () => {
@@ -220,7 +233,7 @@ const CartCard = ({ item, dispatch }) => {
   );
 };
 
-const CartForm = ({ attachment, total, cart, dispatch }) => {
+const CartForm = ({ attachment, total, cart, dispatch, subTotal, service }) => {
   const history = useHistory();
   const [showPop, setShowPop] = useState(false);
   const [message, setMessage] = useState("");
@@ -276,6 +289,8 @@ const CartForm = ({ attachment, total, cart, dispatch }) => {
       body.append("phone", data.phone);
       body.append("email", data.email);
       body.append("attachment", attachment);
+      body.append("subTotal", subTotal);
+      body.append("service", service);
       body.append("total", total);
       body.append("order", JSON.stringify(order));
 

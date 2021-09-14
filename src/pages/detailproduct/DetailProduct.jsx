@@ -90,10 +90,10 @@ const DetailProduct = () => {
         type: "ADD_TO_CART",
         payload: {
           id: dataProduct.id,
-          toppings: selectedToppings,
           initialPrice: subTotal,
           quantity: 1,
           subTotal: subTotal,
+          toppings: selectedToppings,
         },
       });
       dispatch({

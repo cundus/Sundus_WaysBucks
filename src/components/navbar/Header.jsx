@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Dropdown, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import LoginModal from "../modal/LoginModal";
 import { useHistory } from "react-router";
@@ -16,7 +16,7 @@ import Polygon from "../../assets/Polygon.svg";
 
 import RegisterModal from "../modal/RegisterModal";
 import { WBContext } from "../../context/WBContext";
-import { setAuthToken } from "../../config/api";
+import { API, setAuthToken } from "../../config/api";
 
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -25,7 +25,7 @@ const Header = () => {
   const { state, dispatch } = useContext(WBContext);
   const history = useHistory();
 
-  console.log("ini State di Context ", state.cart);
+  // console.log("ini State di Context ", state);
 
   const showLoginHandle = () => {
     setShowLogin(true);
@@ -99,6 +99,8 @@ const Header = () => {
 
 const AfterLogin = ({ state, dispatch }) => {
   const history = useHistory();
+  const [photo, setPhoto] = useState("");
+  const path = "http://localhost:4000/uploads/picture/";
 
   const handleSignout = (e) => {
     dispatch({
@@ -111,6 +113,18 @@ const AfterLogin = ({ state, dispatch }) => {
 
     history.push("/");
   };
+
+  useEffect(async () => {
+    try {
+      const res = await API.get("/profile");
+      // console.log(res);
+      setPhoto(
+        res.data.data.picture !== null ? path + res.data.data.picture : null
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [photo]);
 
   return (
     <>
@@ -133,7 +147,11 @@ const AfterLogin = ({ state, dispatch }) => {
         ) : null}
         <Dropdown as={Nav.Item} id="nav-dropdown">
           <Dropdown.Toggle id="dropdown-autoclose-true" as={Nav.Link}>
-            <img className="avatar" src={AvatarPlaceholder} alt="..." />
+            <img
+              className="avatar"
+              src={photo ? photo : AvatarPlaceholder}
+              alt="..."
+            />
           </Dropdown.Toggle>
 
           <Dropdown.Menu className="dropdown-menu">

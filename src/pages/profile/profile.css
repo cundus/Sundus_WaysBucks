@@ -92,6 +92,7 @@
 }
 
 .btn-success-user {
+  font-size: 12px;
   text-align: center;
   margin-top: 0.4em;
   margin-bottom: 0;
@@ -99,7 +100,7 @@
   background: #970606;
   color: white;
   border-radius: 10px;
-  box-shadow: 5px 5px 10px black;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 /* ProductCardContainer */
 .productCard {

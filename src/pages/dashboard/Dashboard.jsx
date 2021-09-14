@@ -7,6 +7,7 @@ import SuccessIcon from "../../assets/dashboard/success.svg";
 
 import { API } from "../../config/api";
 import Loader from "../../components/loading/Loader";
+import DetailTransaction from "../../components/modal/DetailTransaction";
 
 const Dashboard = () => {
   const [transaction, setTransaction] = useState([]);
@@ -46,18 +47,23 @@ const Dashboard = () => {
               <th scope="col" style={{ width: "2rem" }}>
                 No
               </th>
-              <th scope="col">Name</th>
-              <th scope="col" style={{ width: "12rem" }}>
-                Address
+              <th scope="col" style={{ width: "10rem" }}>
+                Name
               </th>
+              <th scope="col">Address</th>
               <th scope="col" style={{ width: "7rem" }}>
                 Post Code
               </th>
               <th scope="col" style={{ width: "8rem" }}>
                 Income
               </th>
-              <th scope="col">Status</th>
-              <th scope="col" style={{ textAlign: "center" }}>
+              <th scope="col" style={{ width: "10rem" }}>
+                Detail
+              </th>
+              <th scope="col" style={{ width: "10rem" }}>
+                Status
+              </th>
+              <th scope="col" style={{ textAlign: "center", width: "15rem" }}>
                 Action
               </th>
             </tr>
@@ -80,6 +86,8 @@ const Dashboard = () => {
 };
 
 export const Td = ({ item, index, setStatus }) => {
+  const [showDetail, setShowDetail] = useState(false);
+
   const onAction = async (value, e) => {
     e.preventDefault();
     setStatus(false);
@@ -117,6 +125,12 @@ export const Td = ({ item, index, setStatus }) => {
           <td>{item.zipCode}</td>
           <td style={{ color: "#061E99" }}> {item.total}</td>
           <td
+            className="cursor-pointer text-primary"
+            onClick={() => setShowDetail(true)}
+          >
+            Detail Transaction
+          </td>
+          <td
             className={
               item.status === "Waiting Approve"
                 ? "text-warning text-center"
@@ -144,6 +158,11 @@ export const Td = ({ item, index, setStatus }) => {
           </td>
         </tr>
       </tbody>
+      <DetailTransaction
+        show={showDetail}
+        hide={() => setShowDetail(false)}
+        data={item}
+      />
     </>
   );
 };

@@ -36,7 +36,11 @@ const UserReducer = (state, action) => {
 
       if (isInCart) {
         const inCart = state.cart.map((product) => {
-          if (product === action.payload) {
+          const matchedArray = arraysMatch(
+            product.toppings,
+            action.payload.toppings
+          );
+          if (product.id === action.payload.id && matchedArray) {
             return {
               ...product,
               quantity: product.quantity + 1,
@@ -59,6 +63,8 @@ const UserReducer = (state, action) => {
       };
     case "SAVE_CART":
       localStorage.setItem("cart", JSON.stringify(state.cart));
+      console.log(state.cart);
+
       return state;
     case "DECREASE_CART":
       return {

@@ -52,7 +52,6 @@ const Profile = () => {
 
   const onChangePhoto = async (e) => {
     try {
-      e.preventDefault();
       setStatus(true);
       setIsLoading(true);
 
@@ -70,6 +69,7 @@ const Profile = () => {
 
       setStatus(false);
       setIsLoading(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -113,15 +113,19 @@ const Profile = () => {
         >
           <p className="title-profile">My Transaction</p>
           <div>
-            {transactions
-              ? transactions.map((transaction) => (
-                  <TransactionCard
-                    transaction={transaction}
-                    setStatus={setStatus}
-                    key={transaction.id}
-                  />
-                ))
-              : null}
+            {transactions?.length > 0 ? (
+              transactions.map((transaction) => (
+                <TransactionCard
+                  transaction={transaction}
+                  setStatus={setStatus}
+                  key={transaction.id}
+                />
+              ))
+            ) : (
+              <>
+                <p>You haven't made any transaction yet</p>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -147,7 +151,11 @@ export const TransactionCard = ({ transaction, setStatus }) => {
     <div className="TransactionCardContainer">
       <div className="leftCard">
         {transaction.order.map((item) => (
-          <ProductCard key={item.id} item={item} />
+          <ProductCard
+            key={item.id}
+            item={item}
+            created={transaction.createdAt}
+          />
         ))}
       </div>
       <div className="right-logo">
@@ -188,10 +196,10 @@ export const TransactionCard = ({ transaction, setStatus }) => {
   );
 };
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, created }) => {
   // console.log("ini adalah item product", item);
-  const today = moment().format("dddd");
-  const todayDate = moment().format("D MMMM YYYY");
+  const today = moment(created).format("dddd");
+  const todayDate = moment(created).format("D MMMM YYYY");
   const path = "http://localhost:4000/uploads/products/";
 
   const topping =
